@@ -42,4 +42,5 @@ jobs:
           terraform apply \
             -auto-approve \
             -var-file="environments/dev/dev.tfvars" \
-            -var="image_tag=${{ github.event.inputs.image_tag }}"
+            -var="image_tag=${{ github.event.inputs.image_tag }}" \
+            -var="database_password=${DB_PASSWORD}" 

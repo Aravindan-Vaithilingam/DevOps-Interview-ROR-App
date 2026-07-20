@@ -11,6 +11,7 @@ on:
 env:
   AWS_REGION: us-east-1
   TF_DIR: terraform
+  DB_PASSWORD: ${{ secrets.TF_VAR_DB_PASSWORD }}
 
 jobs:
   plan:
@@ -46,4 +47,5 @@ jobs:
           terraform plan \
             -var-file="environments/dev/dev.tfvars" \
             -var="image_tag=${{ github.event.inputs.image_tag }}" \
+            -var="database_password=${DB_PASSWORD}" \
             -out="dev.tfplan"
