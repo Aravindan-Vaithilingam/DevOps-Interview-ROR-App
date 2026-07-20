@@ -35,7 +35,7 @@ jobs:
           IMAGE_TAG=${{ github.sha }}
 
           # Build from Dockerfile in a specific path (e.g., ./docker)
-          docker build -f docker/app/Dockerfile -t $ECR_REPO:$IMAGE_TAG 
+          docker build -f ./docker/app/Dockerfile -t $ECR_REPO:$IMAGE_TAG 
 
           # Tag and push to ECR
           IMAGE_NAME=$ECR_REGISTRY/$ECR_REPO:$IMAGE_TAG
