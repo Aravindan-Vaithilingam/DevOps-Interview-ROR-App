@@ -1,0 +1,14 @@
+project_name   = "myapp"
+environment    = "prod"
+s3_bucket_name = "myapp-prod-data-unique-suffix"
+
+# Supply through TF_VAR_database_password or a non-committed terraform.tfvars file.
+# database_password = "replace-me"
+
+# Optionally enable HTTPS with an ACM certificate in ap-south-1.
+# certificate_arn = "arn:aws:acm:ap-south-1:123456789012:certificate/..."
+
+# Set application secrets to existing Secrets Manager or SSM Parameter Store ARNs.
+# app_secrets = {
+#   DB_PASSWORD = "arn:aws:secretsmanager:ap-south-1:123456789012:secret:myapp-db-password"
+# }
