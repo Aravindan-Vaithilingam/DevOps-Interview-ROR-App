@@ -20,7 +20,7 @@ To run in local use the following steps,
 
 To run in Github actions, 
 
-1. Set the access and secret key of AWS service account with necessary permissions to create resources
+1. Set the access and secret key of AWS service account in Github secrets
 2. Run terraform plan stage with latest git commit sha of the repo
 3. Once the plan is success, use the same git commit sha for the terraform deploy stage
 
