@@ -34,8 +34,9 @@ jobs:
           ECR_REPO=ror-app
           IMAGE_TAG=${{ github.sha }}
 
-          # Build from Dockerfile in a specific path (e.g., ./docker)
-          docker build -t $ECR_REPO:$IMAGE_TAG ./docker/app/
+          # Use the repository root as the build context so Gemfile and
+          # docker/app/entrypoint.sh are both available to the Dockerfile.
+          docker build -f docker/app/Dockerfile -t $ECR_REPO:$IMAGE_TAG .
 
           # Tag and push to ECR
           IMAGE_NAME=$ECR_REGISTRY/$ECR_REPO:$IMAGE_TAG
