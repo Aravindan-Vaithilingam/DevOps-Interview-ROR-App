@@ -18,4 +18,10 @@ To run in local use the following steps,
 3. `terraform apply -auto-approve -var-file="environments/dev/dev.tfvars" -var="image_tag=dbcb038cd1290b6a56ed25f08ca08f8ffbbb4aea" -var="database_password=xxxxxxxx"` # password should no lesser than 8 chars
 
 
+To run in Github actions, 
+
+1. Set the access and secret key of AWS service account with necessary permissions to create resources
+2. Run terraform plan stage with latest git commit sha of the repo
+3. Once the plan is success, use the same git commit sha for the terraform deploy stage
+
 ![Alt text](./app_arch.drawio.png "Architecture diagram")
