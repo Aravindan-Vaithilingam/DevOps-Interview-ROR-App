@@ -9,3 +9,13 @@ To comply with scalability, reliability, efficiency following things were done,
 6. The piepline has three jobs, build, plan, apply. In an real environment separate jobs for both dev and prd running in separate tagged runners in used.
 7. Used delete protection to the resources like DB, and ALB
 
+
+To run in local use the following steps,
+
+1. `aws configure` to configure access and secret keys of AWS account with necessary permissions to deploy the service
+2. `terraform init -reconfigure -backend-config="environments/dev/backend.hcl"`
+2. `terraform plan -var-file="environments/dev/dev.tfvars" -var="image_tag=dbcb038cd1290b6a56ed25f08ca08f8ffbbb4aea"        -var="database_password=xxxxxxxx" -out="dev.tfplan"` # password should no lesser than 8 chars
+3. `terraform apply -auto-approve -var-file="environments/dev/dev.tfvars" -var="image_tag=dbcb038cd1290b6a56ed25f08ca08f8ffbbb4aea" -var="database_password=xxxxxxxx"` # password should no lesser than 8 chars
+
+
+![Alt text](./app_arch.drawio.png "Architecture diagram")
