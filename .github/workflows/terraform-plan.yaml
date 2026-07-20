@@ -1,19 +1,19 @@
-name: Terraform Deployment
+name: Terraform Plan
 
 on:
-  workflow_run:
-    workflows:
-      - Build and Push to ECR
-    types:
-      - completed
+  workflow_dispatch:
+    inputs:
+      image_tag:
+        description: "Docker image tag (Git commit SHA)"
+        required: true
+        type: string
 
 env:
   AWS_REGION: us-east-1
   TF_DIR: terraform
 
 jobs:
-  deploy:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+  plan:
     runs-on: ubuntu-latest
 
     steps:
@@ -31,7 +31,10 @@ jobs:
 
       - name: Terraform Init
         working-directory: ${{ env.TF_DIR }}
-        run: terraform init -reconfigure -backend-config="environments/dev/backend.hcl"
+        run: |
+          terraform init \
+            -reconfigure \
+            -backend-config="environments/dev/backend.hcl"
 
       - name: Terraform Validate
         working-directory: ${{ env.TF_DIR }}
@@ -40,14 +43,7 @@ jobs:
       - name: Terraform Plan
         working-directory: ${{ env.TF_DIR }}
         run: |
-          IMAGE_TAG=${{ github.event.workflow_run.head_sha }}
-
           terraform plan \
-          -var-file="environments/dev.tfvars" \
-          -var="image_tag=$IMAGE_TAG" \
-          -out="dev.tfplan"
-
-
-      - name: Terraform Apply
-        working-directory: ${{ env.TF_DIR }}
-        run: terraform apply -auto-approve dev.tfplan
+            -var-file="environments/dev.tfvars" \
+            -var="image_tag=${{ github.event.inputs.image_tag }}" \
+            -out="dev.tfplan"
